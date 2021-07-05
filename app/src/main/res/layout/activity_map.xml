@@ -6,38 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="52dp"
+        android:background="@color/logo_back"
+        android:fontFamily="@font/suez_one"
+        android:gravity="center_horizontal"
+        android:text="@string/logo"
+        android:textColor="@color/logo_txt"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/buttonExit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            tools:layout_editor_absoluteX="158dp"
-            tools:layout_editor_absoluteY="329dp" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="97dp"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        app:tintMode="src_in"
+        tools:tint="@color/logo_badge" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="412dp"
+        android:layout_height="731dp"
+        android:layout_marginTop="52dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="TextView" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="410dp"
+            android:layout_height="521dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="44dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="wrap_content"
+                android:layout_height="573dp">
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            </ListView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonExit"
+            android:layout_width="67dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:stateListAnimator="@null"
+            android:text="Button"
+            app:backgroundTint="@color/white"
+            app:icon="@drawable/log"
+            app:iconTint="@color/logo_back" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
