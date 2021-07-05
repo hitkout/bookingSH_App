@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnSignIn = findViewById(R.id.btnSignIn);
         btnRegister = findViewById(R.id.btnRegister);
-
         root = findViewById(R.id.rootElement);
 
         auth = FirebaseAuth.getInstance();

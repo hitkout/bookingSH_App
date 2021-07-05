@@ -40,7 +40,6 @@
             android:id="@+id/btnSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/"
             android:text="@string/btn_sign_in"
             android:layout_marginRight="6dp"
             android:layout_weight="1"
