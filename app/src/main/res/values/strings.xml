@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">bookingSH App</string>
+    <string name="btn_sign_in">Войти</string>
+    <string name="btn_register">Зарегистрироваться</string>
+</resources>

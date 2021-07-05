@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "150193869022",
+    "firebase_url": "https://bsh-app-5b77f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bsh-app-5b77f",
+    "storage_bucket": "bsh-app-5b77f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150193869022:android:e06a58b310b6c3aabb724f",
+        "android_client_info": {
+          "package_name": "com.example.bookingshapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150193869022-9udbpvncj9sk7t69q9u9cptjivcmkbnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfv5fS3w0ic2rlp7QO2ZUv5ElBPbJLUnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150193869022-9udbpvncj9sk7t69q9u9cptjivcmkbnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
