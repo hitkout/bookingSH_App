@@ -3,5 +3,5 @@
     <string name="logo">proSport</string>
     <string name="btn_sign_in">Войти</string>
     <string name="btn_register">Регистрация</string>
-    <string name="txt_made">Made by:<br>Osminkin Nikita</br><br>Lobanov Aleksandr</br></string>
+    <string name="txt_made">Made by:\nOsminkin Nikita\nLobanov Aleksandr</string>
 </resources>
