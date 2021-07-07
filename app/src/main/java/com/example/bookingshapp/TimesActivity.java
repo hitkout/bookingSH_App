@@ -34,13 +34,13 @@ public class TimesActivity extends AppCompatActivity {
     }
 
     private void getIntentMain(){
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("dates").child(getIntent().getStringExtra("getString"));
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("dates").child(getIntent().getStringExtra("getDateFromList"));
         Intent intent = getIntent();
         List<String> listTimes = new ArrayList<>();
-        textViewTimes.setText(intent.getStringExtra("getString"));
+        textViewTimes.setText(intent.getStringExtra("getDateFromList"));
         byte count = 9;
-        for (int i = 0; i < 7; i++, count++) {
-            listTimes.add(count + ":00");
+        for (int i = 0; i < 7; i++) {
+            listTimes.add(count + ":00 - " + ++count + ":00");
             listTemp.add(listTimes.get(i));
             mDatabase.child(listTimes.get(i)).setValue(2);
         }
@@ -48,14 +48,14 @@ public class TimesActivity extends AppCompatActivity {
     }
 
     private void setOnClickList(){
-        listViewTimes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String getString = listTemp.get(position);
-                Intent intent = new Intent(TimesActivity.this, OfficeActivity.class);
-                intent.putExtra("getString", getString);
-                startActivity(intent);
-            }
+        listViewTimes.setOnItemClickListener((parent, view, position, id) -> {
+            String getString = listTemp.get(position);
+            Intent getIntent = getIntent();
+            String getDateFromList = getIntent.getStringExtra("getDateFromList");
+            Intent intent = new Intent(TimesActivity.this, OfficeActivity.class);
+            intent.putExtra("getDateFromList", getDateFromList);
+            intent.putExtra("getString", getString);
+            startActivity(intent);
         });
     }
 }

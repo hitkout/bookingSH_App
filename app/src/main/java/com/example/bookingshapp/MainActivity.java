@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.setNegativeButton("Отменить", (dialogInterface, which) -> dialogInterface.dismiss());
 
-        dialog.setPositiveButton("Добавить", (dialogInterface, which) -> {
+        dialog.setPositiveButton("Войти", (dialogInterface, which) -> {
             if (TextUtils.isEmpty(email.getText())){
                 Snackbar.make(root, "Введите вашу почту", Snackbar.LENGTH_SHORT).show();
                 return;
