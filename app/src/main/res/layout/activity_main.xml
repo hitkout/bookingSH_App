@@ -47,8 +47,7 @@
         android:layout_above="@+id/text_bottom"
         android:layout_marginBottom="110dp"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:weightSum="2">
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btnSignIn"
@@ -56,15 +55,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/prompt"
             android:text="@string/btn_sign_in"
-            android:visibility="visible"
-            app:backgroundTint="@color/btn"
-            android:layout_weight="1"/>
+            app:backgroundTint="@color/btn"/>
 
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:fontFamily="@font/prompt"
             android:text="@string/btn_register"
             app:backgroundTint="@color/btn" />

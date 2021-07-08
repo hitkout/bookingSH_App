@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.bookingshapp.Models.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -25,30 +27,32 @@ public class TimesActivity extends AppCompatActivity {
         listTemp = new ArrayList<>();
         getIntentMain();
         setOnClickList();
+        listTimes();
     }
 
     private void getIntentMain(){
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("dates").child(getIntent().getStringExtra("getDateFromList"));
         Intent intent = getIntent();
-        List<String> listTimes = new ArrayList<>();
         textViewTimes.setText(intent.getStringExtra("getDateFromList"));
+    }
+
+    private void listTimes(){
+        List<String> listTimes = new ArrayList<>();
         byte count = 9;
         for (int i = 0; i < 7; i++) {
             listTimes.add(count + ":00 - " + ++count + ":00");
             listTemp.add(listTimes.get(i));
-            mDatabase.child(listTimes.get(i)).setValue(2);
         }
         listViewTimes.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listTimes));
     }
 
     private void setOnClickList(){
         listViewTimes.setOnItemClickListener((parent, view, position, id) -> {
-            String getString = listTemp.get(position);
+            String getTimeFromList = listTemp.get(position);
             Intent getIntent = getIntent();
             String getDateFromList = getIntent.getStringExtra("getDateFromList");
             Intent intent = new Intent(TimesActivity.this, OfficeActivity.class);
             intent.putExtra("getDateFromList", getDateFromList);
-            intent.putExtra("getString", getString);
+            intent.putExtra("getTimeFromList", getTimeFromList);
             startActivity(intent);
         });
     }

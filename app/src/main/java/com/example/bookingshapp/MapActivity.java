@@ -88,7 +88,6 @@ public class MapActivity extends AppCompatActivity {
                 date.add(Calendar.DATE, -1);
             for (int i = 0; i < 7; i++) {
                 dateStringList.add(curFormat.format(date.getTime()));
-                mDatabase.child("dates").child(formatForDatabase.format(date.getTime())).setValue(1);
                 listTemp.add(formatForDatabase.format(date.getTime()));
                 date.roll(Calendar.DAY_OF_YEAR, true);
             }
@@ -96,7 +95,6 @@ public class MapActivity extends AppCompatActivity {
         else
             for (int i = 0; i < 7; i++) {
                 dateStringList.add(curFormat.format(date.getTime()));
-                mDatabase.child("dates").child(formatForDatabase.format(date.getTime())).setValue(1);
                 listTemp.add(formatForDatabase.format(date.getTime()));
                 date.roll(Calendar.DAY_OF_YEAR, true);
             }

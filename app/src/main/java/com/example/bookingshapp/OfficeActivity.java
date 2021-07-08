@@ -18,6 +18,7 @@ public class OfficeActivity extends AppCompatActivity {
     ListView listViewOffice;
     TextView textViewDate;
     TextView textViewTime;
+    private List<String> listTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +27,40 @@ public class OfficeActivity extends AppCompatActivity {
         listViewOffice = findViewById(R.id.listViewOffice);
         textViewDate = findViewById(R.id.textViewDate);
         textViewTime = findViewById(R.id.textViewTime);
+        listTemp = new ArrayList<>();
         getIntentMain();
+        setOnClickList();
+        listOffice();
     }
 
     private void getIntentMain(){
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("dates").child(getIntent().getStringExtra("getDateFromList"));
         Intent intent = getIntent();
         textViewDate.setText(intent.getStringExtra("getDateFromList"));
-        textViewTime.setText(intent.getStringExtra("getString"));
+        textViewTime.setText(intent.getStringExtra("getTimeFromList"));
+    }
+
+    private void listOffice(){
         List<String> listOffice = new ArrayList<>();
         byte count = 9;
         for (int i = 0; i < 7; i++, count++) {
             listOffice.add("Кабинет " + i);
-            mDatabase.child(listOffice.get(i)).setValue(2);
+            listTemp.add(listOffice.get(i));
         }
         listViewOffice.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listOffice));
     }
 
+    private void setOnClickList(){
+        listViewOffice.setOnItemClickListener((parent, view, position, id) -> {
+            String getOfficeFromList = listTemp.get(position);
+            Intent getIntent = getIntent();
+            String getDateFromList = getIntent.getStringExtra("getDateFromList");
+            String getTimeFromList = getIntent.getStringExtra("getTimeFromList");
+            Intent intent = new Intent(OfficeActivity.this, SignUpActivity.class);
+            intent.putExtra("getDateFromList", getDateFromList);
+            intent.putExtra("getTimeFromList", getTimeFromList);
+            intent.putExtra("getOfficeFromList", getOfficeFromList);
+            startActivity(intent);
+        });
+    }
 
 }
