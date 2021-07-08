@@ -9,7 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="logo_back">#1C1B1B</color>
     <color name="logo_badge">#EAE0E0</color>
-    <color name="logo_txt">#716F6F</color>
+    <color name="logo_txt">#D1CECE</color>
     <color name="made">#D6DFF3</color>
     <color name="btn">#181845</color>
+    <color name="back">#F0EFEDED</color>
+    <color name="back_top">#6E6666</color>
 </resources>

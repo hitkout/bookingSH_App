@@ -3,6 +3,7 @@ package com.example.bookingshapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -46,16 +47,15 @@ public class SignUpActivity extends AppCompatActivity {
     private void init(){
         btnSignUp = findViewById(R.id.btnSignUp);
         textViewDate = findViewById(R.id.textViewDate);
-        textViewTime = findViewById(R.id.textViewTime);
-        textViewOffice = findViewById(R.id.textViewOffice);
+
         user = new ArrayList<>();
     }
 
+    @SuppressLint("SetTextI18n")
     private void getIntentMain(){
         Intent intent = getIntent();
-        textViewDate.setText(intent.getStringExtra("getDateFromList"));
-        textViewTime.setText(intent.getStringExtra("getTimeFromList"));
-        textViewOffice.setText(intent.getStringExtra("getOfficeFromList"));
+        textViewDate.setText(intent.getStringExtra("getDateFromList")+" / "+intent.getStringExtra("getTimeFromList")+" / "+intent.getStringExtra("getOfficeFromList"));
+
     }
 
     private void btnSignUpClick(){

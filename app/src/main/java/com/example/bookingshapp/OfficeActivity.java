@@ -2,6 +2,7 @@ package com.example.bookingshapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -26,17 +27,16 @@ public class OfficeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_office);
         listViewOffice = findViewById(R.id.listViewOffice);
         textViewDate = findViewById(R.id.textViewDate);
-        textViewTime = findViewById(R.id.textViewTime);
         listTemp = new ArrayList<>();
         getIntentMain();
         setOnClickList();
         listOffice();
     }
 
+    @SuppressLint("SetTextI18n")
     private void getIntentMain(){
         Intent intent = getIntent();
-        textViewDate.setText(intent.getStringExtra("getDateFromList"));
-        textViewTime.setText(intent.getStringExtra("getTimeFromList"));
+        textViewDate.setText(intent.getStringExtra("getDateFromList")+" / "+intent.getStringExtra("getTimeFromList"));
     }
 
     private void listOffice(){
