@@ -2,31 +2,24 @@ package com.example.bookingshapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
-    TextView textViewDate, textViewTime, textViewOffice;
+    TextView textViewDate;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private List<String> user;
 
@@ -70,14 +63,10 @@ public class SignUpActivity extends AppCompatActivity {
                 polya.add("email");
                 user.add(name);
                 user.add(email);
-                btnSignUp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < 2; i++){
-                            int finalI = i;
-                            mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
-                                    .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name).child(polya.get(finalI)).setValue(user.get(finalI));
-                        }
+                btnSignUp.setOnClickListener(v -> {
+                    for (int i = 0; i < 2; i++){
+                        mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
+                                .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name).child(polya.get(i)).setValue(user.get(i));
                     }
                 });
             }

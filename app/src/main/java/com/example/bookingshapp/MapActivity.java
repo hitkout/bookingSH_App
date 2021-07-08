@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,20 +23,19 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity {
-    Button btnExit;
+    ImageView btnExit;
     private TextView textViewName;
     DatabaseReference db;
     String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference uidRef = rootRef.child("Users").child(uid);
     private List<String> listTemp;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     FirebaseDatabase addDateInDb;
     DatabaseReference dates;
     ListView listView;
 
     private void init(){
-        btnExit = findViewById(R.id.buttonExit);
+        btnExit = findViewById(R.id.imageViewExitButton);
         textViewName = findViewById(R.id.textViewName);
         db = FirebaseDatabase.getInstance().getReference();
         listTemp = new ArrayList<>();

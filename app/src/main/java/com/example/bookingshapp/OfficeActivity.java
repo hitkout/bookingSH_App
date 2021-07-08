@@ -8,17 +8,12 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class OfficeActivity extends AppCompatActivity {
     ListView listViewOffice;
     TextView textViewDate;
-    TextView textViewTime;
     private List<String> listTemp;
 
     @Override
