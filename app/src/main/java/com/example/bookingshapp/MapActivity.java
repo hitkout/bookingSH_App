@@ -75,28 +75,43 @@ public class MapActivity extends AppCompatActivity {
         });
     }
 
+//    private void listDate() {
+//
+//        SimpleDateFormat curFormat = new SimpleDateFormat("EEEE, dd MMMM, yyyy", Locale.getDefault());
+//        SimpleDateFormat formatForDatabase = new SimpleDateFormat("dd MMMM, yyyy, EEEE", Locale.getDefault());
+//        Calendar date = new GregorianCalendar();
+//        List<String> dateStringList = new ArrayList<>();
+//
+//        if (date.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY){
+//            while (date.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
+//                date.add(Calendar.DATE, -1);
+//            for (int i = 0; i < 7; i++) {
+//                dateStringList.add(curFormat.format(date.getTime()));
+//                listTemp.add(formatForDatabase.format(date.getTime()));
+//                date.roll(Calendar.DAY_OF_YEAR, true);
+//            }
+//        }
+//        else
+//            for (int i = 0; i < 7; i++) {
+//                dateStringList.add(curFormat.format(date.getTime()));
+//                listTemp.add(formatForDatabase.format(date.getTime()));
+//                date.roll(Calendar.DAY_OF_YEAR, true);
+//            }
+//        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dateStringList));
+//    }
+
     private void listDate() {
 
         SimpleDateFormat curFormat = new SimpleDateFormat("EEEE, dd MMMM, yyyy", Locale.getDefault());
         SimpleDateFormat formatForDatabase = new SimpleDateFormat("dd MMMM, yyyy, EEEE", Locale.getDefault());
         Calendar date = new GregorianCalendar();
         List<String> dateStringList = new ArrayList<>();
-
-        if (date.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY){
-            while (date.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
-                date.add(Calendar.DATE, -1);
-            for (int i = 0; i < 7; i++) {
-                dateStringList.add(curFormat.format(date.getTime()));
-                listTemp.add(formatForDatabase.format(date.getTime()));
-                date.roll(Calendar.DAY_OF_YEAR, true);
-            }
+        date.add(Calendar.DATE, -1);
+        for (int i = 0; i < 7; i++) {
+            dateStringList.add(curFormat.format(date.getTime()));
+            listTemp.add(formatForDatabase.format(date.getTime()));
+            date.roll(Calendar.DAY_OF_YEAR, true);
         }
-        else
-            for (int i = 0; i < 7; i++) {
-                dateStringList.add(curFormat.format(date.getTime()));
-                listTemp.add(formatForDatabase.format(date.getTime()));
-                date.roll(Calendar.DAY_OF_YEAR, true);
-            }
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dateStringList));
     }
 

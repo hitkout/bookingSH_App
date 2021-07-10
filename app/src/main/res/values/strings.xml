@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bookingSH App</string>
+    <string name="app_name">proSport</string>
     <string name="logo">proSport</string>
     <string name="btn_sign_in">Войти</string>
     <string name="btn_register">Регистрация</string>

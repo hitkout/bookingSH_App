@@ -2,7 +2,6 @@ package com.example.bookingshapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,13 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-
     Button btnSignIn, btnRegister;
     FirebaseAuth auth;
     FirebaseDatabase db;
     DatabaseReference users;
     RelativeLayout root;
-    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +32,10 @@ public class MainActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         btnRegister = findViewById(R.id.btnRegister);
         root = findViewById(R.id.rootElement);
-
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
-
         btnSignIn.setOnClickListener(v -> showSignInWindow());
     }
 
@@ -52,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-        pd = new ProgressDialog(this);
-        pd.hide();
         if (user != null) {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
             startActivity(intent);

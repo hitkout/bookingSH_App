@@ -36,9 +36,10 @@ public class OfficeActivity extends AppCompatActivity {
 
     private void listOffice(){
         List<String> listOffice = new ArrayList<>();
-        byte count = 9;
-        for (int i = 0; i < 7; i++, count++) {
-            listOffice.add("Кабинет " + i);
+        int numberOfCabinet = 1;
+        for (int i = 0; i < 7; i++) {
+            listOffice.add("Зал " + numberOfCabinet);
+            numberOfCabinet++;
             listTemp.add(listOffice.get(i));
         }
         listViewOffice.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listOffice));

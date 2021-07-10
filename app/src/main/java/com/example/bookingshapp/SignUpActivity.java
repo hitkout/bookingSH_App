@@ -19,7 +19,9 @@ import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
+    Button btnUnsubscribe;
     TextView textViewDate;
+    TextView textViewInfoInSignUpPage;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private List<String> user;
 
@@ -27,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference uidRef = rootRef.child("Users").child(uid);
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +37,13 @@ public class SignUpActivity extends AppCompatActivity {
         init();
         getIntentMain();
         btnSignUpClick();
-
     }
 
     private void init(){
         btnSignUp = findViewById(R.id.btnSignUp);
+        btnUnsubscribe = findViewById(R.id.btnUnsubscribe);
         textViewDate = findViewById(R.id.textViewDate);
-
+        textViewInfoInSignUpPage = findViewById(R.id.textViewInfoInSignUpPage);
         user = new ArrayList<>();
     }
 
@@ -48,14 +51,14 @@ public class SignUpActivity extends AppCompatActivity {
     private void getIntentMain(){
         Intent intent = getIntent();
         textViewDate.setText(intent.getStringExtra("getDateFromList")+" / "+intent.getStringExtra("getTimeFromList")+" / "+intent.getStringExtra("getOfficeFromList"));
-
     }
 
     private void btnSignUpClick(){
-        //вывести имя зашедшего
         ValueEventListener eventListener = new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                long numberOfClients;
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 List<String> polya = new ArrayList<>();
@@ -63,11 +66,26 @@ public class SignUpActivity extends AppCompatActivity {
                 polya.add("email");
                 user.add(name);
                 user.add(email);
+                mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
+                        .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (10 - snapshot.getChildrenCount()) + " мест!");
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 btnSignUp.setOnClickListener(v -> {
-                    for (int i = 0; i < 2; i++){
+                    for (int i = 0; i < user.size(); i++){
                         mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
                                 .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name).child(polya.get(i)).setValue(user.get(i));
                     }
+                });
+                btnUnsubscribe.setOnClickListener(v -> {
+                    mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
+                            .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name).removeValue();
                 });
             }
 
