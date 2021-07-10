@@ -23,25 +23,19 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity {
-    ImageView btnExit;
+    private ImageView btnExit;
     private TextView textViewName;
-    DatabaseReference db;
-    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference uidRef = rootRef.child("Users").child(uid);
+    private final String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+    private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private final DatabaseReference uidRef = rootRef.child("Users").child(uid);
     private List<String> listTemp;
-    FirebaseDatabase addDateInDb;
-    DatabaseReference dates;
-    ListView listView;
+    private ListView listView;
 
     private void init(){
         btnExit = findViewById(R.id.imageViewExitButton);
         textViewName = findViewById(R.id.textViewName);
-        db = FirebaseDatabase.getInstance().getReference();
         listTemp = new ArrayList<>();
         listView = findViewById(R.id.listView);
-        addDateInDb = FirebaseDatabase.getInstance();
-        dates = addDateInDb.getReference("Dates");
     }
 
     @Override
@@ -49,19 +43,14 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         init();
-
         listDate();
-
         setOnClickList();
-
-        //вывести имя зашедшего
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue(String.class);
                 textViewName.setText(name);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         };
@@ -101,7 +90,6 @@ public class MapActivity extends AppCompatActivity {
 //    }
 
     private void listDate() {
-
         SimpleDateFormat curFormat = new SimpleDateFormat("EEEE, dd MMMM, yyyy", Locale.getDefault());
         SimpleDateFormat formatForDatabase = new SimpleDateFormat("dd MMMM, yyyy, EEEE", Locale.getDefault());
         Calendar date = new GregorianCalendar();

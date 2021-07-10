@@ -12,20 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfficeActivity extends AppCompatActivity {
-    ListView listViewOffice;
-    TextView textViewDate;
+    private ListView listViewOffice;
+    private TextView textViewDate;
     private List<String> listTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_office);
-        listViewOffice = findViewById(R.id.listViewOffice);
-        textViewDate = findViewById(R.id.textViewDate);
-        listTemp = new ArrayList<>();
+        init();
         getIntentMain();
         setOnClickList();
         listOffice();
+    }
+
+    private void init(){
+        listViewOffice = findViewById(R.id.listViewOffice);
+        textViewDate = findViewById(R.id.textViewDate);
+        listTemp = new ArrayList<>();
     }
 
     @SuppressLint("SetTextI18n")

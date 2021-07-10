@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import com.example.bookingshapp.Models.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -17,23 +18,26 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnSignIn, btnRegister;
-    FirebaseAuth auth;
-    FirebaseDatabase db;
-    DatabaseReference users;
-    RelativeLayout root;
+    private FirebaseAuth auth;
+    private DatabaseReference users;
+    private RelativeLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnSignIn = findViewById(R.id.btnSignIn);
-        btnRegister = findViewById(R.id.btnRegister);
+        init();
+    }
+
+    private void init(){
+        Button btnSignIn = findViewById(R.id.btnSignIn);
+        Button btnRegister = findViewById(R.id.btnRegister);
         root = findViewById(R.id.rootElement);
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
         btnSignIn.setOnClickListener(v -> showSignInWindow());
@@ -47,16 +51,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
+        if (user != null && Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified()) {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
             startActivity(intent);
             finish();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        System.exit(0);
     }
 
     private void showSignInWindow() {
@@ -84,8 +83,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             auth.signInWithEmailAndPassword(String.valueOf(email.getText()), pass.getText().toString()).addOnSuccessListener(authResult -> {
-                FirebaseUser userSuccess = auth.getCurrentUser();
-                updateUI(userSuccess);
+                if (Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified()){
+                    FirebaseUser userSuccess = auth.getCurrentUser();
+                    updateUI(userSuccess);
+                }
+                else
+                    Toast.makeText(MainActivity.this, "Вы не подтвердили аккаунт!", Toast.LENGTH_SHORT).show();
             }).addOnFailureListener(e -> {
                 Snackbar.make(root, "Ошибка авторизации. " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                 updateUI(null);
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.setNegativeButton("Отменить", (dialogInterface, which) -> dialogInterface.dismiss());
 
-        dialog.setPositiveButton("Зарегестрироваться и войти", (dialogInterface, which) -> {
+        dialog.setPositiveButton("Зарегестрироваться", (dialogInterface, which) -> {
             if (TextUtils.isEmpty(name.getText())){
                 Snackbar.make(root, "Введите ваше имя", Snackbar.LENGTH_SHORT).show();
                 return;
@@ -129,16 +132,16 @@ public class MainActivity extends AppCompatActivity {
                 user.setName(String.valueOf(name.getText()));
                 user.setEmail(String.valueOf(email.getText()));
                 user.setPass(String.valueOf(pass.getText()));
+                user.setId(String.valueOf(UUID.randomUUID()));
 
-                users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user).addOnSuccessListener(unused -> {
-                    Snackbar.make(root, "Пользователь добавлен!", Snackbar.LENGTH_SHORT).show();
-                    FirebaseUser userSuccess = auth.getCurrentUser();
-                    updateUI(userSuccess);
-                });
-            }).addOnFailureListener(e -> {
-                Snackbar.make(root, "Ошибка регистрации! " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
-                updateUI(null);
-            });
+                users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user).addOnSuccessListener(unused -> Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Snackbar.make(root, "Пользователь добавлен! Пожалуйста, подтвердите аккаунт в письме", Snackbar.LENGTH_SHORT).show();
+                    }else {
+                        Snackbar.make(root, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT).show();
+                    }
+                }));
+            }).addOnFailureListener(e -> Snackbar.make(root, "Ошибка регистрации! " + e.getMessage(), Snackbar.LENGTH_SHORT).show());
         });
         dialog.show();
     }

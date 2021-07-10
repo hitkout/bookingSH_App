@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
-    Button btnSignUp;
-    Button btnUnsubscribe;
-    TextView textViewDate;
-    TextView textViewInfoInSignUpPage;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private Button btnSignUp;
+    private Button btnUnsubscribe;
+    private TextView textViewDate;
+    private TextView textViewInfoInSignUpPage;
+    private final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private List<String> user;
 
     String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -58,9 +58,9 @@ public class SignUpActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                long numberOfClients;
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
+                String id = dataSnapshot.child("id").getValue(String.class);
                 List<String> polya = new ArrayList<>();
                 polya.add("name");
                 polya.add("email");
@@ -80,13 +80,11 @@ public class SignUpActivity extends AppCompatActivity {
                 btnSignUp.setOnClickListener(v -> {
                     for (int i = 0; i < user.size(); i++){
                         mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
-                                .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name).child(polya.get(i)).setValue(user.get(i));
+                                .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name + " (" + id + ")").child(polya.get(i)).setValue(user.get(i));
                     }
                 });
-                btnUnsubscribe.setOnClickListener(v -> {
-                    mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
-                            .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name).removeValue();
-                });
+                btnUnsubscribe.setOnClickListener(v -> mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
+                        .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name + " (" + id + ")").removeValue());
             }
 
             @Override

@@ -1,7 +1,10 @@
 package com.example.bookingshapp.Models;
 
 public class User {
-    private String name, email, pass;
+    private String name;
+    private String email;
+    private String pass;
+    private String idUser;
 
     public User(){
 
@@ -35,5 +38,13 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getId() {
+        return idUser;
+    }
+
+    public void setId(String idUser) {
+        this.idUser = idUser;
     }
 }
