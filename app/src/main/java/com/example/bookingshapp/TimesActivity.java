@@ -34,7 +34,7 @@ public class TimesActivity extends AppCompatActivity {
     private void listTimes(){
         List<String> listTimes = new ArrayList<>();
         byte count = 9;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 9; i++) {
             listTimes.add(count + ":00 - " + ++count + ":00");
             listTemp.add(listTimes.get(i));
         }

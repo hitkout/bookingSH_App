@@ -106,8 +106,7 @@ public class MapActivity extends AppCompatActivity {
         SimpleDateFormat formatForDatabase = new SimpleDateFormat("dd MMMM, yyyy, EEEE", Locale.getDefault());
         Calendar date = new GregorianCalendar();
         List<String> dateStringList = new ArrayList<>();
-        date.add(Calendar.DATE, -1);
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i <= 7; i++) {
             dateStringList.add(curFormat.format(date.getTime()));
             listTemp.add(formatForDatabase.format(date.getTime()));
             date.roll(Calendar.DAY_OF_YEAR, true);
