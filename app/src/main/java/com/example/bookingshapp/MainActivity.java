@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnRegister = findViewById(R.id.btnRegister);
         Button btnProblem = findViewById(R.id.btnProblem);
         root = findViewById(R.id.rootElementMain);
-        auth = FirebaseAuth.getInstance();
+            auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 User user = new User();
                 user.setName(String.valueOf(name.getText()));
                 user.setEmail(String.valueOf(email.getText()));
-                user.setPass(String.valueOf(pass.getText()));
                 user.setId(String.valueOf(UUID.randomUUID()));
 
                 users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user).addOnSuccessListener(unused -> Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(task -> {
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             }
             auth.sendPasswordResetEmail(Objects.requireNonNull(emailInProblemWindow.getText()).toString()).addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
-                    Snackbar.make(problemWindow, "Пароль был отправлен на вашу почту", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(problemWindow, "Письмо с изменением пароля было отправлено", Snackbar.LENGTH_SHORT).show();
                 }else {
                     Snackbar.make(problemWindow, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT).show();
                 }

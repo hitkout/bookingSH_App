@@ -45,6 +45,7 @@ public class MapActivity extends AppCompatActivity {
         init();
         listDate();
         setOnClickList();
+
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
