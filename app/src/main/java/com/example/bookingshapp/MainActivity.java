@@ -35,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         Button btnSignIn = findViewById(R.id.btnSignIn);
         Button btnRegister = findViewById(R.id.btnRegister);
-        root = findViewById(R.id.rootElement);
+        Button btnProblem = findViewById(R.id.btnProblem);
+        root = findViewById(R.id.rootElementMain);
         auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
         btnSignIn.setOnClickListener(v -> showSignInWindow());
+        btnProblem.setOnClickListener(v -> showProblemWindow());
     }
 
     @Override
@@ -126,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            Snackbar.make(root, "Письмо отправляется...", Snackbar.LENGTH_SHORT).show();
+
             //регистрация пользователя
             auth.createUserWithEmailAndPassword(String.valueOf(email.getText()), pass.getText().toString()).addOnSuccessListener(authResult -> {
                 User user = new User();
@@ -143,6 +147,36 @@ public class MainActivity extends AppCompatActivity {
                 }));
             }).addOnFailureListener(e -> Snackbar.make(root, "Ошибка регистрации! " + e.getMessage(), Snackbar.LENGTH_SHORT).show());
         });
+        dialog.show();
+    }
+
+    private void showProblemWindow(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Забыли пароль?");
+        dialog.setMessage("Введите почту");
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View problemWindow = inflater.inflate(R.layout.problem_window, null);
+        dialog.setView(problemWindow);
+
+        TextInputEditText emailInProblemWindow = problemWindow.findViewById(R.id.emailInProblemWindow);
+        Button btnRecoverPassword = problemWindow.findViewById(R.id.btnRecoverPassword);
+
+        btnRecoverPassword.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(emailInProblemWindow.getText())){
+                Snackbar.make(problemWindow, "Вы ничего не ввели", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+            auth.sendPasswordResetEmail(Objects.requireNonNull(emailInProblemWindow.getText()).toString()).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    Snackbar.make(problemWindow, "Пароль был отправлен на вашу почту", Snackbar.LENGTH_SHORT).show();
+                }else {
+                    Snackbar.make(problemWindow, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        dialog.setNegativeButton("Отменить", (dialogInterface, which) -> dialogInterface.dismiss());
         dialog.show();
     }
 }
