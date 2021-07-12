@@ -45,12 +45,12 @@
         android:layout_height="wrap_content"
         android:background="@color/back_top"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="15dp"
         android:paddingTop="7dp"
         android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCap"
-        android:paddingStart="10dp"
         tools:ignore="RtlSymmetry">
 
         <TextView

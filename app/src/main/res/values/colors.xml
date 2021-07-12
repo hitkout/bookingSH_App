@@ -14,4 +14,5 @@
     <color name="btn">#181845</color>
     <color name="back">#F0EFEDED</color>
     <color name="back_top">#6E6666</color>
+    <color name="top_back">#151515</color>
 </resources>

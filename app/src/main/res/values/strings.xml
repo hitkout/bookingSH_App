@@ -6,4 +6,7 @@
     <string name="btn_problem">Забыли пароль?</string>
     <string name="btn_recover_password">Сбросить пароль</string>
     <string name="txt_made">Made by:\nOsminkin Nikita\nLobanov Aleksandr</string>
+    <string name="sign_up">Записаться в зал</string>
+    <string name="sign_out">Отменить запись</string>
+
 </resources>

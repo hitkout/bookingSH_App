@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:background="@color/back_top"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:paddingTop="7dp"
         android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,6 @@
 
         <ListView
             android:id="@+id/listViewOffice"
-            style="@style/CustomTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
