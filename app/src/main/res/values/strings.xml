@@ -3,7 +3,6 @@
     <string name="logo">Sport Book</string>
     <string name="btn_sign_in">Войти</string>
     <string name="btn_register">Регистрация</string>
-    <string name="btn_problem">Забыли пароль?</string>
     <string name="btn_recover_password">Сбросить пароль</string>
     <string name="txt_made">Made by:\nOsminkin Nikita\nLobanov Aleksandr</string>
     <string name="sign_up">Записаться в зал</string>

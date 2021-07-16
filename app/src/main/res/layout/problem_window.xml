@@ -19,13 +19,6 @@
             android:layout_height="wrap_content"
             android:hint="email"/>
 
-        <Button
-            android:id="@+id/btnRecoverPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_recover_password"
-            app:backgroundTint="@color/btn" />
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

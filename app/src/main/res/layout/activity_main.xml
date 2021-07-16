@@ -66,14 +66,6 @@
             android:text="@string/btn_register"
             app:backgroundTint="@color/btn" />
 
-        <Button
-            android:id="@+id/btnProblem"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/prompt"
-            android:text="@string/btn_problem"
-            app:backgroundTint="@color/btn" />
-
     </LinearLayout>
 
     <TextView

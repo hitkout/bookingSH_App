@@ -2,6 +2,8 @@ package com.example.bookingshapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,14 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         Button btnSignIn = findViewById(R.id.btnSignIn);
         Button btnRegister = findViewById(R.id.btnRegister);
-        Button btnProblem = findViewById(R.id.btnProblem);
         root = findViewById(R.id.rootElementMain);
-            auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
         btnSignIn.setOnClickListener(v -> showSignInWindow());
-        btnProblem.setOnClickListener(v -> showProblemWindow());
     }
 
     @Override
@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         TextInputEditText email = signInWindow.findViewById(R.id.inputEmailId);
         TextInputEditText pass = signInWindow.findViewById(R.id.inputPassId);
 
+        dialog.setNeutralButton("Забыли пароль?", (dialog1, which) -> showProblemWindow());
+
         dialog.setNegativeButton("Отменить", (dialogInterface, which) -> dialogInterface.dismiss());
 
         dialog.setPositiveButton("Войти", (dialogInterface, which) -> {
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 updateUI(null);
             });
         });
+
         dialog.show();
     }
 
@@ -130,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
             Snackbar.make(root, "Письмо отправляется...", Snackbar.LENGTH_SHORT).show();
 
-            //регистрация пользователя
             auth.createUserWithEmailAndPassword(String.valueOf(email.getText()), pass.getText().toString()).addOnSuccessListener(authResult -> {
                 User user = new User();
                 user.setName(String.valueOf(name.getText()));
@@ -159,22 +161,19 @@ public class MainActivity extends AppCompatActivity {
         dialog.setView(problemWindow);
 
         TextInputEditText emailInProblemWindow = problemWindow.findViewById(R.id.emailInProblemWindow);
-        Button btnRecoverPassword = problemWindow.findViewById(R.id.btnRecoverPassword);
-
-        btnRecoverPassword.setOnClickListener(v -> {
+        dialog.setPositiveButton("Сбросить пароль", (dialog1, which) -> {
             if (TextUtils.isEmpty(emailInProblemWindow.getText())){
-                Snackbar.make(problemWindow, "Вы ничего не ввели", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(root, "Вы ничего не ввели", Snackbar.LENGTH_SHORT).show();
                 return;
             }
             auth.sendPasswordResetEmail(Objects.requireNonNull(emailInProblemWindow.getText()).toString()).addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
-                    Snackbar.make(problemWindow, "Письмо с изменением пароля было отправлено", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, "Письмо с изменением пароля было отправлено", Snackbar.LENGTH_SHORT).show();
                 }else {
-                    Snackbar.make(problemWindow, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(root, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT).show();
                 }
             });
         });
-
         dialog.setNegativeButton("Отменить", (dialogInterface, which) -> dialogInterface.dismiss());
         dialog.show();
     }
