@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".userRecord">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCap"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/logo_back"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="3dp"
+            app:srcCompat="@drawable/logo"
+            app:tint="@color/logo_badge" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/prompt_semibold"
+            android:gravity="center_horizontal"
+            android:text="@string/logo"
+            android:textAlignment="center"
+            android:textColor="@color/logo_txt"
+            android:textSize="34sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/back_top"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCap"
+        android:paddingStart="15dp"
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+            android:id="@+id/textViewUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/prompt"
+            android:text="TextView"
+            android:textColor="@color/logo_txt"
+            android:textSize="20sp"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutText">
+
+
+        <TextView
+            android:id="@+id/textViewRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

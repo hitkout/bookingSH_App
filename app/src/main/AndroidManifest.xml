@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookingSHApp">
+        <activity android:name=".userRecord"></activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".OfficeActivity" />
         <activity android:name=".TimesActivity" />

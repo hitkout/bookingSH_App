@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,11 +32,14 @@ public class MapActivity extends AppCompatActivity {
     private List<String> listTemp;
     private ListView listView;
 
+    ImageView imageView4;
+
     private void init(){
         btnExit = findViewById(R.id.imageViewExitButton);
         textViewName = findViewById(R.id.textViewName);
         listTemp = new ArrayList<>();
         listView = findViewById(R.id.listView);
+        imageView4 = findViewById(R.id.imageView4);
     }
 
     @Override
@@ -62,6 +66,15 @@ public class MapActivity extends AppCompatActivity {
             Intent intent = new Intent(MapActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
+        });
+
+        imageView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapActivity.this, userRecord.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 
