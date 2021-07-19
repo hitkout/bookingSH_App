@@ -47,17 +47,17 @@
 
         <ImageView
             android:id="@+id/imageViewQuestion"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
             app:srcCompat="@drawable/question"
-            app:tint="@color/logo_badge"
-            android:layout_alignParentEnd="true" />
+            app:tint="@color/logo_badge" />
     </RelativeLayout>
 
 
