@@ -41,13 +41,6 @@
             android:textColor="@color/logo_txt"
             android:textSize="34sp" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/question"
-            tools:layout_height="30dp"
-            tools:layout_width="30dp"
-            tools:tint="@color/logo_badge" />
     </LinearLayout>
 
     <LinearLayout
