@@ -37,6 +37,15 @@
                 android:textColor="@color/logo_txt"
                 android:textSize="34sp" />
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                app:srcCompat="@drawable/apk_logo_fore"
+                app:tint="@color/logo_badge" />
+
     </LinearLayout>
 
     <LinearLayout

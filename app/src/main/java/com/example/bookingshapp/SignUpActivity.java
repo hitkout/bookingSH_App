@@ -150,12 +150,16 @@ public class SignUpActivity extends AppCompatActivity {
             mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
                     .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name + " (" + id + ")").child(polya.get(i)).setValue(user.get(i));
         }
+        mDatabase.child("records").child(id).child(name).child(getIntent().getStringExtra("getDateFromList"))
+                    .child(getIntent().getStringExtra("getTimeFromList")).setValue(getIntent().getStringExtra("getOfficeFromList"));
         usersInHall.refreshDrawableState();
     }
 
     private void deleteUsersInHall(String name, String id){
         mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
                 .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name + " (" + id + ")").removeValue();
+        mDatabase.child("records").child(id).child(name).child(getIntent().getStringExtra("getDateFromList"))
+                .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).removeValue();
         usersInHall.refreshDrawableState();
     }
 }
