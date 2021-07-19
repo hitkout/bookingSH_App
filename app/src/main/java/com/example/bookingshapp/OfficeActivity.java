@@ -1,16 +1,22 @@
 package com.example.bookingshapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OfficeActivity extends AppCompatActivity {
+    private ConstraintLayout constraint;
     private ListView listViewOffice;
     private TextView textViewDate;
     private List<String> listTemp;
@@ -23,12 +29,14 @@ public class OfficeActivity extends AppCompatActivity {
         getIntentMain();
         setOnClickList();
         listOffice();
+        Snackbar.make(constraint, "Выберите зал", Snackbar.LENGTH_LONG).show();
     }
 
     private void init(){
         listViewOffice = findViewById(R.id.listViewOffice);
         textViewDate = findViewById(R.id.textViewDate);
         listTemp = new ArrayList<>();
+        constraint = findViewById(R.id.constraintElementOffice);
     }
 
     @SuppressLint("SetTextI18n")

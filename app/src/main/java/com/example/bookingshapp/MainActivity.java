@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.example.bookingshapp.Models.User;
@@ -37,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         Button btnSignIn = findViewById(R.id.btnSignIn);
         Button btnRegister = findViewById(R.id.btnRegister);
+        ImageView imageViewQuestion = findViewById(R.id.imageViewQuestion);
         root = findViewById(R.id.rootElementMain);
         auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
         btnSignIn.setOnClickListener(v -> showSignInWindow());
+        imageViewQuestion.setOnClickListener(v -> showQuestion());
     }
 
     @Override
@@ -98,6 +101,20 @@ public class MainActivity extends AppCompatActivity {
                 updateUI(null);
             });
         });
+
+        dialog.show();
+    }
+
+    private void showQuestion() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setMessage("HHH");
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View questionInWindow = inflater.inflate(R.layout.question_window, null);
+        dialog.setView(questionInWindow);
+
+        dialog.setNegativeButton("Закрыть", (dialogInterface, which) -> dialogInterface.dismiss());
 
         dialog.show();
     }

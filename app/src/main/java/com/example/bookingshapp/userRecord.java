@@ -24,6 +24,7 @@ public class userRecord extends AppCompatActivity {
     private final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     //ListView listViewRecord;
     TextView textView;
+    TextView textViewUser;
 
     String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -35,7 +36,19 @@ public class userRecord extends AppCompatActivity {
         setContentView(R.layout.activity_user_record);
         //listViewRecord = findViewById(R.id.listViewRecord);
         textView = findViewById(R.id.textViewRecord);
+        textViewUser = findViewById(R.id.textViewUser);
         getRecordsFromDB();
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue(String.class);
+                textViewUser.setText(name);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        };
+        uidRef.addListenerForSingleValueEvent(eventListener);
     }
 
     private void getRecordsFromDB(){
@@ -43,7 +56,7 @@ public class userRecord extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String id = dataSnapshot.child("id").getValue(String.class);
-                String name = dataSnapshot.child("name").getValue(String.class);
+                assert id != null;
                 mDatabase.child("records").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,7 +75,7 @@ public class userRecord extends AppCompatActivity {
     }
 
     private void getRecords(DataSnapshot snapshot){
-        String listRecordInDB = "";
+        String listRecordInDB = "Здесь пока нет записей";
         for (DataSnapshot dss : snapshot.getChildren()){
             String values = String.valueOf(dss.getValue());
             values = values.replace("}, ", "\n\n");

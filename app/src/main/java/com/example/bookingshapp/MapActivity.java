@@ -31,15 +31,14 @@ public class MapActivity extends AppCompatActivity {
     private final DatabaseReference uidRef = rootRef.child("Users").child(uid);
     private List<String> listTemp;
     private ListView listView;
-
-    ImageView imageView4;
+    private ImageView imageViewRecords;
 
     private void init(){
         btnExit = findViewById(R.id.imageViewExitButton);
         textViewName = findViewById(R.id.textViewName);
         listTemp = new ArrayList<>();
         listView = findViewById(R.id.listView);
-        imageView4 = findViewById(R.id.imageView4);
+        imageViewRecords = findViewById(R.id.imageViewRecords);
     }
 
     @Override
@@ -68,12 +67,11 @@ public class MapActivity extends AppCompatActivity {
             finish();
         });
 
-        imageView4.setOnClickListener(new View.OnClickListener() {
+        imageViewRecords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MapActivity.this, userRecord.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
