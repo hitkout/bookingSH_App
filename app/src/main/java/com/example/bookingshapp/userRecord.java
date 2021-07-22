@@ -1,10 +1,17 @@
 package com.example.bookingshapp;
 
+import androidx.activity.contextaware.OnContextAvailableListener;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,13 +23,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class userRecord extends AppCompatActivity {
     private final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    //ListView listViewRecord;
     TextView textView;
     TextView textViewUser;
 
@@ -34,11 +47,8 @@ public class userRecord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_record);
-        //listViewRecord = findViewById(R.id.listViewRecord);
-        textView = findViewById(R.id.textViewRecord);
-        textViewUser = findViewById(R.id.textViewUser);
+        init();
         getRecordsFromDB();
-
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,6 +59,13 @@ public class userRecord extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         };
         uidRef.addListenerForSingleValueEvent(eventListener);
+    }
+
+    private void init(){
+        textView = findViewById(R.id.textViewRecord);
+        textViewUser = findViewById(R.id.textViewUser);
+        ImageView imageViewQuestion = findViewById(R.id.imageViewQuestion);
+        imageViewQuestion.setOnClickListener(v -> showQuestion());
     }
 
     private void getRecordsFromDB(){
@@ -82,10 +99,74 @@ public class userRecord extends AppCompatActivity {
             values = values.replace("{", "");
             values = values.replace("}", "");
             values = values.replace("=", " / ");
+            values = values.replace(" / true", "");
 
             listRecordInDB = values;
         }
         textView.setText(listRecordInDB);
-        //listViewRecord.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listRecordInDB));
     }
+
+    private void showQuestion() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setMessage("Справка");
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View questionInWindow = inflater.inflate(R.layout.question_window, null);
+        dialog.setView(questionInWindow);
+
+        dialog.setNegativeButton("Закрыть", (dialogInterface, which) -> dialogInterface.dismiss());
+
+        dialog.show();
+    }
+
+//    private void deleteOldRecords(){
+//        uidRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String id = dataSnapshot.child("id").getValue(String.class);
+//                String name = dataSnapshot.child("name").getValue(String.class);
+//                boolean check = false;
+//                int getMilliFromDB = 0;
+//                mDatabase.child("records").child(id).child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        try {
+//                            getDate(snapshot, check, getMilliFromDB);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//                if (check){
+//                    mDatabase.child("records").child(id).child(name).child(String.valueOf(getMilliFromDB)).removeValue();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+//
+//    private void getDate(DataSnapshot snapshot, boolean check, int getMilliFromDB) throws ParseException {
+//        String myDate = getIntent().getStringExtra("getMilli");
+//        SimpleDateFormat formatForDatabase = new SimpleDateFormat("dd MMMM, yyyy, EEEE", Locale.getDefault());
+//        Date date = formatForDatabase.parse(myDate);
+//        String nowDate = formatForDatabase.format(date.getTime());
+//        long millis = date.getTime();
+//        for (DataSnapshot dss : snapshot.getChildren()){
+//            if (Long.parseLong(nowDate) > millis) {
+//                getMilliFromDB = Integer.parseInt(String.valueOf(dss.getValue()));
+//                check = true;
+//                return;
+//            }
+//        }
+//    }
 }

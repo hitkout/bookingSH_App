@@ -2,6 +2,7 @@ package com.example.bookingshapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -9,9 +10,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -38,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ListView usersInHall;
     private Button btnSignUp;
     private Button btnUnsubscribe;
+    private TextView textViewInfo;
 
     String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -63,12 +68,39 @@ public class SignUpActivity extends AppCompatActivity {
         usersInHall = findViewById(R.id.usersInHall);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnUnsubscribe = findViewById(R.id.btnUnsubscribe);
+        textViewInfo = findViewById(R.id.textViewInfo);
+        ImageView imageViewQuestion = findViewById(R.id.imageViewQuestion);
+        imageViewQuestion.setOnClickListener(v -> showQuestion());
     }
 
     @SuppressLint("SetTextI18n")
     private void getIntentMain(){
         Intent intent = getIntent();
         textViewDate.setText(intent.getStringExtra("getDateFromList")+" / "+intent.getStringExtra("getTimeFromList")+" / "+intent.getStringExtra("getOfficeFromList"));
+        switch (intent.getStringExtra("getOfficeFromList")){
+            case "Кардиозона":
+                textViewInfo.setText("Соотношение беговых дорожек, велотренажеров, АМТ, эллиптических и гребных тренажеров должно определяться демографией ваших клиентов.");
+                break;
+            case "Силовая зона":
+                textViewInfo.setText("13% клиентов уходят, а 18% не становятся членами клуба, потому что чувствуют себя «не в своей тарелке», поэтому пространство должно располагать к тренировке, а оборудование должно быть простым в использовании.");
+                break;
+            case "Зона свободных весов":
+                textViewInfo.setText("Тренажеры для работы со свободными весами должны стоять спиной к блочному оборудованию. Это мотивирует женщин больше использовать блочные тренажеры.");
+                break;
+            case "Зона растяжки":
+                textViewInfo.setText("Выделенная зона для растяжки поможет создать ощущение спокойствия перед занятием или после тяжелой тренировки.");
+                break;
+            case "Зона групповых программ":
+                textViewInfo.setText("Залы групповых программ пользуются наибольшей популярностью среди клиентов клуба, особенно среди женщин. Персональные, групповые и функциональные тренировки входят в ТОП 10 Фитнес-трендов.");
+                break;
+            case "Бассейн 1":
+            case "Бассейн 2":
+                textViewInfo.setText("С помощью регулярного посещения бассейна можно повысить выносливость организма. Также водные упражнения способствуют нормализации давления и улучшению кровообращения. После плавания нет болевых ощущений, как после бега или прыжков.");
+                break;
+            default:
+                textViewInfo.setText("");
+                break;
+        }
     }
 
     private void getChildrenCountFromDB(){
@@ -77,7 +109,27 @@ public class SignUpActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (10 - snapshot.getChildrenCount()) + " мест!");
+                switch (getIntent().getStringExtra("getOfficeFromList")){
+                    case "Кардиозона":
+                        textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (12 - snapshot.getChildrenCount()) + " мест!");
+                        break;
+                    case "Силовая зона":
+                        textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (8 - snapshot.getChildrenCount()) + " мест!");
+                        break;
+                        case "Зона свободных весов":
+                        textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (10 - snapshot.getChildrenCount()) + " мест!");
+                        break;
+                    case "Зона растяжки":
+                    case "Зона групповых программ":
+                        textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (14 - snapshot.getChildrenCount()) + " мест!");
+                        break;
+                    case "Бассейн 1":
+                    case "Бассейн 2":
+                        textViewInfoInSignUpPage.setText(getIntent().getStringExtra("getOfficeFromList") + ": осталось " + (20 - snapshot.getChildrenCount()) + " мест!");
+                        break;
+                    default:
+                        break;
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -118,9 +170,9 @@ public class SignUpActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue(String.class);
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String id = dataSnapshot.child("id").getValue(String.class);
-                List<String> polya = new ArrayList<>();
-                polya.add("Имя");
-                polya.add("Связь");
+                List<String> listForUserElements = new ArrayList<>();
+                listForUserElements.add("Имя");
+                listForUserElements.add("Связь");
                 user.add(name);
                 user.add(email);
 
@@ -128,11 +180,48 @@ public class SignUpActivity extends AppCompatActivity {
                         .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount() < 10){
-                            addUsersInHall(polya, name, id);
+                        switch (getIntent().getStringExtra("getOfficeFromList")){
+                            case "Кардиозона":
+                                if (snapshot.getChildrenCount() < 12){
+                                    addUsersInHall(listForUserElements, name, id);
+                                }
+                                else
+                                    Snackbar.make(constraint, "Максимальное число клиентов!", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case "Силовая зона":
+                                if (snapshot.getChildrenCount() < 8){
+                                    addUsersInHall(listForUserElements, name, id);
+                                }
+                                else
+                                    Snackbar.make(constraint, "Максимальное число клиентов!", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case "Зона свободных весов":
+                                if (snapshot.getChildrenCount() < 10){
+                                    addUsersInHall(listForUserElements, name, id);
+                                }
+                                else
+                                    Snackbar.make(constraint, "Максимальное число клиентов!", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case "Зона растяжки":
+                            case "Зона групповых программ":
+                                if (snapshot.getChildrenCount() < 14){
+                                    addUsersInHall(listForUserElements, name, id);
+                                }
+                                else
+                                    Snackbar.make(constraint, "Максимальное число клиентов!", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case "Бассейн 1":
+                            case "Бассейн 2":
+                                if (snapshot.getChildrenCount() < 20){
+                                    addUsersInHall(listForUserElements, name, id);
+                                }
+                                else
+                                    Snackbar.make(constraint, "Максимальное число клиентов!", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Snackbar.make(constraint, "Ой!", Snackbar.LENGTH_SHORT).show();
+                                break;
                         }
-                        else
-                            Snackbar.make(constraint, "Максимальное число клиентов!", Snackbar.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}
@@ -145,13 +234,27 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void addUsersInHall(List<String> polya, String name, String id){
+    private void showQuestion() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setMessage("Справка");
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View questionInWindow = inflater.inflate(R.layout.question_window, null);
+        dialog.setView(questionInWindow);
+
+        dialog.setNegativeButton("Закрыть", (dialogInterface, which) -> dialogInterface.dismiss());
+
+        dialog.show();
+    }
+
+    private void addUsersInHall(List<String> listForUserElements, String name, String id){
         for (int i = 0; i < user.size(); i++){
             mDatabase.child("dates").child(getIntent().getStringExtra("getDateFromList"))
-                    .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name + " (" + id + ")").child(polya.get(i)).setValue(user.get(i));
+                    .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).child("Клиент " + name + " (" + id + ")").child(listForUserElements.get(i)).setValue(user.get(i));
         }
         mDatabase.child("records").child(id).child(name).child(getIntent().getStringExtra("getDateFromList"))
-                    .child(getIntent().getStringExtra("getTimeFromList")).setValue(getIntent().getStringExtra("getOfficeFromList"));
+                    .child(getIntent().getStringExtra("getTimeFromList")).child(getIntent().getStringExtra("getOfficeFromList")).setValue(true);
         usersInHall.refreshDrawableState();
     }
 

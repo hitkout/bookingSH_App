@@ -8,37 +8,55 @@
     android:background="@color/back"
     tools:context=".SignUpActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutCap"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="20dp"
+        android:id="@+id/linearLayoutCap"
         android:background="@color/logo_back"
-        android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="3dp"
+                app:srcCompat="@drawable/logo"
+                app:tint="@color/logo_badge" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt_semibold"
+                android:text="@string/logo"
+                android:textColor="@color/logo_txt"
+                android:textSize="34sp"/>
+        </LinearLayout>
+
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/imageViewQuestion"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="3dp"
-            app:srcCompat="@drawable/logo"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/question"
             app:tint="@color/logo_badge" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/prompt_semibold"
-            android:gravity="center_horizontal"
-            android:text="@string/logo"
-            android:textAlignment="center"
-            android:textColor="@color/logo_txt"
-            android:textSize="34sp" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutText"
@@ -63,7 +81,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutInfo"
+        android:id="@+id/layoutCountChildren"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -80,7 +98,27 @@
             android:text="TextView"
             android:textColor="@color/logo_back"
             android:textSize="20sp" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layoutInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCountChildren"
+        android:paddingStart="15dp">
+
+        <TextView
+            android:id="@+id/textViewInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/logo_back"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,7 +146,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="441dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutInfo">
@@ -116,6 +154,7 @@
         <ListView
             android:id="@+id/usersInHall"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="#27006893"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

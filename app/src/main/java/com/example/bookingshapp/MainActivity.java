@@ -2,8 +2,6 @@ package com.example.bookingshapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -39,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
         Button btnSignIn = findViewById(R.id.btnSignIn);
         Button btnRegister = findViewById(R.id.btnRegister);
         ImageView imageViewQuestion = findViewById(R.id.imageViewQuestion);
+        imageViewQuestion.setOnClickListener(v -> showQuestion());
         root = findViewById(R.id.rootElementMain);
         auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         users = db.getReference("Users");
         btnRegister.setOnClickListener(v -> showRegisterWindow());
         btnSignIn.setOnClickListener(v -> showSignInWindow());
-        imageViewQuestion.setOnClickListener(v -> showQuestion());
     }
 
     @Override
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     private void showQuestion() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
-        dialog.setMessage("HHH");
+        dialog.setMessage("Справка");
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View questionInWindow = inflater.inflate(R.layout.question_window, null);
@@ -123,17 +121,13 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Зарегистрироваться");
         dialog.setMessage("Введите все данные для регистрации");
-
         LayoutInflater inflater = LayoutInflater.from(this);
         View registerWindow = inflater.inflate(R.layout.register_window, null);
         dialog.setView(registerWindow);
-
         TextInputEditText name = registerWindow.findViewById(R.id.inputNameId);
         TextInputEditText email = registerWindow.findViewById(R.id.inputEmailId);
         TextInputEditText pass = registerWindow.findViewById(R.id.inputPassId);
-
         dialog.setNegativeButton("Отменить", (dialogInterface, which) -> dialogInterface.dismiss());
-
         dialog.setPositiveButton("Зарегестрироваться", (dialogInterface, which) -> {
             if (TextUtils.isEmpty(name.getText())){
                 Snackbar.make(root, "Введите ваше имя", Snackbar.LENGTH_SHORT).show();
@@ -147,9 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(root, "Введите пароль больше 5 символов", Snackbar.LENGTH_SHORT).show();
                 return;
             }
-
             Snackbar.make(root, "Письмо отправляется...", Snackbar.LENGTH_SHORT).show();
-
             auth.createUserWithEmailAndPassword(String.valueOf(email.getText()), pass.getText().toString()).addOnSuccessListener(authResult -> {
                 User user = new User();
                 user.setName(String.valueOf(name.getText()));
